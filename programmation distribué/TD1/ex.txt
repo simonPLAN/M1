@@ -1,0 +1,142 @@
+EXERCICE 1:
+
+a)
+regle d entre c est une regle qui n et pas defini autre par
+-> program-def -> Service RPC definitio des procedure
+-> specification -> parametre d entrer et valeur de retour
+
+b)
+terme non-terminale non defini
+"opaque"= chaine
+
+
+(idendifier "=" value) == groupe
+("," identifier "=" value)*  *= 0 ou plusieure identifier
+
+-> identifier
+-> Decimal-constant
+-> hexedicimal-constant
+-> octal-constant
+
+
+c)
+valeur de retour -> regle proc-return
+parametres-> règle procedure-def
+             proc-firstarg
+
+
+EXERCICE 2:
+
+-------------------------------------------------------------------------------
+typedef unsigned int data;
+
+struc reponse{
+unsigned int reponse;
+};
+
+typedef struc reponse reponse;
+
+program SIGN {
+    version VERSION_UN{
+    reponse SIGN(data)=1; /* positive data ; 0 == negative data */
+    }=1;
+} = 0*20000001;
+
+------------------------------------------------------------------------------------
+b)réecrire plus simplement
+------------------------------------------------------------------------------------
+program SIGN {
+    version VERSION_UN{
+        unsignated int SIGN (unsigned int)=1;
+    }=1;
+} = 0*20000001;
+------------------------------------------------------------------------------------
+
+EXERCICE 3 :
+a)
+------------------------------------------------------------------------------------
+struct data{
+    unsigned int arg1;
+    unsigned int arg2;
+};
+typedef struct data data;
+struct reponse {
+    unsigned int somme;
+    int errno;
+};
+typedef struct reponse reponse;
+program CALCUL{
+    version VERSION_UN{
+        void CALCUL_NULL(void)=0;
+        reponse CALCUL_ADDITION(data)=1;
+    }=1;
+}=0*2000001;
+------------------------------------------------------------------------------------
+b)
+------------------------------------------------------------------------------------
+
+#include "calcul.h"
+void * calcule_null_l_svc(void *argp, struct svc_req*rqstp){
+    static char * result;
+    result=NULL
+    return((void *) &result);
+}
+response * calcule_addition_l_svc(void *argp, struct svc_req*rqstp){
+    static reponse result;
+    result.somme=argp->arg1+argp->arg2;
+    unsigned int max =argp->arg1>argp->arg2?
+        argp->argp1: argp->arg2;
+
+    if(max > result.somme)
+        result.errno=1;
+    else
+        result.errno=0;
+    return(&result);
+}
+------------------------------------------------------------------------------------
+
+
+EXERCICE 4:
+a)
+
+------------------------------------------------------------------------------------
+struct input_data{
+            double input_data[200];
+            int intput_data_len;
+            };
+
+            typedef struct intput_data intput_data;
+
+            progren AVERAGEPROG{
+            version VERSION_ONE{
+                double AVEAGE(intput_data)=1;
+             }=1;
+            }=0*000001;
+
+
+
+------------------------------------------------------------------------------------
+
+b)
+
+struct intput_data{
+    double intput_data<200>;
+};
+
+c)
+struct intput_data{
+    double * input_data;
+    int intput_data_len;
+}
+
+d)
+struct input_data{
+    double intput_data<>;
+};
+
+struct input_data{
+    double * input_data;
+    int input_data_len;
+}
+
+
