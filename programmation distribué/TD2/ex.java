@@ -1,151 +1,81 @@
-// ex 1
-class Compteur extends Thread{
-    static final int NITER = 1000000;
-    static int compteur=0;
-    static object obj=new Object();
+//ex2
 
-    public void run(){
-        for(int i=0 ; i<NITER;i++){
-            synchronized (obj){
-                compteur ++; // session critique
-            }
-        }
-    }
+public interface IPi extends Remote{
+    public double compute(int iter)throws remote exeption;
 }
 
-
-class CompteurTest{
-    public static void main(String[] args) throws InteruptedExecption{
-        // nombre de thread default 4
-        int nbThreads=(args.length<1)?4: Integer.parseInt(args[0])
-                Compteur[] tc = new Compteur[nbThreads];
-        // cree et demare les threads
-        for(int i =0;i<nbThreads;i++){
-            tc[i]=new Compteur();
-            tc[i].start();
-        }
-
-        // attents ques les thread sois terminer
-        for(int i = 0;i<nbThreads;i++){
-            tc[i].join();
-
-            //compare la valeur de compterur avec la valeur attendu
-            if(Compteur.compteur!=Compteur.NITER*nbThreads)
-                systeme.out.println("Erreure ! competeur = " + Compteur.compteur);
-            else
-                systeme.out.println("ok ! competeur = " + Compteur.compteur);
-
-
-        }
+public class serveur implements IPi extends unicastRemoteObject{
+    @java.lang.Override
+    public double compute(int iter) throws remoteExecption {
+        double sum=0;
+        ....
+        return sum;
     }
 }
+public static void main(Strin arg[]){
+    try {
+        serveur erveur = new serveur();
+        registry.bind("PiServeur", serveur);
+        system.ent.println("serveur ready");
+    }catch(...){...}
+}
 
-// ex 2
-
-f(0)=0
-f(1)=1
-f(2)=1
-f(n+2)=f(n+1)+f(n)
-
-
-public class Fibonnacci extends Thread{
-    public static void main(String[] args){
-        Thread t = new Fibonnacci(s); // calcule de f5
-        T.start();
+public class client{
+    public static void main(string args[]){
         try{
-            t.join();
-        }catch (InteruptedExecption){...}
-        systeme.out.println(t.resultat);
-    }
-    public Fibonnacci(long val){
-        this.val=val;
+            IPi ipi = Narning.lookup("rmi://localhost:/PiServer");
+            double sum=ipi.compute (100000);
+            systeme.out.println(sum);
+        }catch(...){...}
     }
 }
 
-public void run(){
-    if(this.val==0) this.resultat=0;
-    else
-        if(this.val==1)this.resultat=1;
-        else{
-            Thread t1=new Fibonnacci(this.val-1);
-            Thread t2=new Fibonnacci(this.val-2);
-            t1.start();
-            t2.start();
-            try{
-                t1.join();
-                t2.join();
-            }catch.....
-            this.resultat=t1.resultat+t2.resultat;
+// ex 2 Version2
+public interface Ipi extends remote{
+    public void computer (int inter, object odc)..
+}
+public interface odc extends remote{
+    public void notifier(double res)...
+}
+public class odc impl implements odc extends unicastRemoteObject{
+    double result=0;
+    public void notifier(double res){
+        this.result=0;
+    }
+    public double getResult(){
+        return this.result;
+    }
+}
+public clas Serveur implemnts Ipi extends unicatRemoteObject{
+    public void computer (int inet), Object (odc)...
+        {
+            double sum=0;
+        ...
+        odc.notifier (sum);
+        }
+        public static void main(String args[]){
+        // meme chose
         }
 }
-
-// exercice 3
-
-
-
-class Exemple extends Thread{
+public class client extends thread{
+    public static ODC odc;
     public void run(){
-        Systeme.out.print("exemple");
+        system.out println("icent fait")
     }
-}
-class Multithread extends Thread{
-    Thread t;
-    public Multithread(Thread t ){ this.t=t;}
-    public void run(){
-        try{this.t.join();}catch ...
-        Systeme.out.print("Multithread");
-    }
-}
-class Mt2 {
-    public static void main(String[] args) {
-        Exemple.exemple = new Exemple();
-        Multithread multi = new Multithread(exemple);
-        mult.start()
-        exemple.start();
+    public static void main (strin arg[]){
         try {
-            multi.join();
-            {
-            catch ...
+            odc= nex odc oac Impl();
+            Client client= new client();
+            client.start();
+            Ipi ipi =Narming.lookup("PiServeur");
+            ipi.computer(100000,cdc);
+            while{odc.getResultat()==0{
+                Thread.sleep(100){
+                    systeme.println(odc.getrsult());
+                    UnicastRemote.objectunexportTObject(odc,t)
+                }
             }
-            Systeme.out.println("simple");
         }
     }
 }
-// exercice 4
 
-class exemple extends Thread{
-    object verrou;
-    public exemple(Object verou){this.verrou=verrou;}
-    public void run(){
-    synchronized ((verrou){
-        systeme.out.print("exemple");
-        verrrou.notify;
-        verrou.set();
-       }
-    }
-}
-class Multithread extends Thread{
-    object verrou;
-    public Multithread(object verrou){
-    this.verrou=verrou
-    }
-    public void run(){
-        synchronized (verrou);
-        while(verrou.get()==0){
-                verrou.wait();
-        }
-        //attente passive
-            try{verrou.wait()
-    }
-
-}
-}
-public Verrou{
-    int passage=0;
-    public int get(){
-        return passage;
-    }
-    public void set(){
-        passage=1;
-    }
-}
